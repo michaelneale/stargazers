@@ -1,3 +1,10 @@
+## Mic's special version
+
+clone to `$GOPATH/src/github.com/spencerkimball/stargazers`
+`go get && go build`
+
+This version (this branch) will only calculate star cumulated vs total historical data.
+
 ## stargazers
 
 illuminate your GitHub community by delving into your repo's stars
