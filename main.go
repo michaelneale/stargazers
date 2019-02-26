@@ -19,8 +19,10 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"reflect"
+	"regexp"
 	"strings"
 
 	"github.com/spencerkimball/stargazers/cmd"
@@ -122,8 +124,20 @@ func Run(args []string) error {
 }
 
 func main() {
+
+	// linkRE provides parsing of the "Link" HTTP header directive.
+	var linkRE = regexp.MustCompile(`.*<(.*)>; rel="next", <(.*)>; rel="last".*`)
+	var withPrev = `<https://api.github.com/repositories/116400734/stargazers?page=1>; rel="prev", <https://api.github.com/repositories/116400734/stargazers?page=3>; rel="next", <https://api.github.com/repositories/116400734/stargazers?page=74>; rel="last", <https://api.github.com/repositories/116400734/stargazers?page=1>; rel="first"`
+	var withoutPrev = `<https://api.github.com/repositories/116400734/stargazers?page=2>; rel="next", <https://api.github.com/repositories/116400734/stargazers?page=74>; rel="last"`
+	var subby = linkRE.FindStringSubmatch(withoutPrev)
+	log.Println(subby[1])
+
+	subby = linkRE.FindStringSubmatch(withPrev)
+	log.Println(subby[1])
+
 	if err := Run(os.Args[1:]); err != nil {
 		fmt.Fprintf(os.Stderr, "failed running command %q: %v", os.Args[1:], err)
 		os.Exit(1)
 	}
+
 }

@@ -59,7 +59,7 @@ func (e *httpError) Error() string {
 }
 
 // linkRE provides parsing of the "Link" HTTP header directive.
-var linkRE = regexp.MustCompile(`^<(.*)>; rel="next", <(.*)>; rel="last".*`)
+var linkRE = regexp.MustCompile(`^.*<(.*)>; rel="next", <(.*)>; rel="last".*`)
 
 // fetchURL fetches the specified URL. The cache (specified in
 // c.CacheDir) is consulted first and if not found, the specified URL
@@ -109,7 +109,7 @@ func fetchURL(c *Context, url string, value interface{}, refresh bool) (string, 
 					time.Sleep(t.expiration())
 				case *httpError:
 					// For now, regard HTTP errors as permanent.
-					log.Printf("unable to fetch %q: %s", url, err)
+					log.Printf("1) unable to fetch %q: %s", url, err)
 					return "", nil
 				default:
 					// Retry with exponential backoff on random connection and networking errors.

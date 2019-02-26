@@ -196,7 +196,9 @@ func (s *Stargazer) Age() int64 {
 	curDay := time.Now().Unix()
 	createT, err := time.Parse(time.RFC3339, s.CreatedAt)
 	if err != nil {
+		log.Println(s.CreatedAt)
 		log.Printf("failed to parse created at timestamp (%s): %s", s.CreatedAt, err)
+
 		return 0
 	}
 	return curDay - createT.Unix()
@@ -222,30 +224,34 @@ func QueryAll(c *Context) error {
 	if err != nil {
 		return err
 	}
-	// Query stargazer user info for all stargazers.
-	if err = QueryUserInfo(c, sg); err != nil {
-		return err
-	}
-	// Query followers for all stargazers.
-	if err = QueryFollowers(c, sg); err != nil {
-		return err
-	}
-
-	// Unique map of repos by repo full name.
 	rs := map[string]*Repo{}
+	// Query stargazer user info for all stargazers.
+	/*
+		if err = QueryUserInfo(c, sg); err != nil {
+			return err
+		}
+		// Query followers for all stargazers.
+		if err = QueryFollowers(c, sg); err != nil {
+			return err
+		}
 
-	// Query starred repos for all stargazers.
-	if err = QueryStarred(c, sg, rs); err != nil {
-		return err
-	}
-	// Query subscribed repos for all stargazers.
-	if err = QuerySubscribed(c, sg, rs); err != nil {
-		return err
-	}
-	// Query contributions to subscribed repos for all stargazers.
-	if err = QueryContributions(c, sg, rs); err != nil {
-		return err
-	}
+		// Unique map of repos by repo full name.
+		rs := map[string]*Repo{}
+
+		// Query starred repos for all stargazers.
+		if err = QueryStarred(c, sg, rs); err != nil {
+			return err
+		}
+		// Query subscribed repos for all stargazers.
+		if err = QuerySubscribed(c, sg, rs); err != nil {
+			return err
+		}
+		// Query contributions to subscribed repos for all stargazers.
+		if err = QueryContributions(c, sg, rs); err != nil {
+			return err
+		}
+	*/
+
 	return SaveState(c, sg, rs)
 }
 

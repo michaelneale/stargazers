@@ -89,21 +89,23 @@ func RunAll(c *fetch.Context, sg []*fetch.Stargazer, rs map[string]*fetch.Repo) 
 	if err := RunCumulativeStars(c, sg); err != nil {
 		return err
 	}
-	if err := RunCorrelatedRepos(c, "starred", sg, rs); err != nil {
-		return err
-	}
-	if err := RunCorrelatedRepos(c, "subscribed", sg, rs); err != nil {
-		return err
-	}
-	if err := RunFollowers(c, sg); err != nil {
-		return err
-	}
-	if err := RunCommitters(c, sg, rs); err != nil {
-		return err
-	}
-	if err := RunAttributesByTime(c, sg, rs); err != nil {
-		return err
-	}
+	/*
+		if err := RunCorrelatedRepos(c, "starred", sg, rs); err != nil {
+			return err
+		}
+		if err := RunCorrelatedRepos(c, "subscribed", sg, rs); err != nil {
+			return err
+		}
+		if err := RunFollowers(c, sg); err != nil {
+			return err
+		}
+		if err := RunCommitters(c, sg, rs); err != nil {
+			return err
+		}
+		if err := RunAttributesByTime(c, sg, rs); err != nil {
+			return err
+		}
+	*/
 	return nil
 }
 
