@@ -1,5 +1,11 @@
 ## Mic's special version
 
+Can download a release for macos from releases: 
+
+```./stargazers -r jenkins-x/jx --token=$GITHUB_ACCESS_TOKEN```
+
+Building: 
+
 clone to `$GOPATH/src/github.com/spencerkimball/stargazers`
 `go get && go build`
 
